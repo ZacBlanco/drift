@@ -16,9 +16,8 @@
 package com.facebook.drift.client.guice;
 
 import com.google.inject.Injector;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 import java.lang.annotation.Annotation;
 import java.util.Objects;

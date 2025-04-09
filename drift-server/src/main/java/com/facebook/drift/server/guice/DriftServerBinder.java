@@ -28,10 +28,9 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.multibindings.Multibinder;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.weakref.jmx.MBeanExporter;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;

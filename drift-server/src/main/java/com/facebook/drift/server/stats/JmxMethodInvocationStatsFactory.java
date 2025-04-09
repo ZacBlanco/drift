@@ -17,10 +17,9 @@ package com.facebook.drift.server.stats;
 
 import com.facebook.drift.codec.metadata.ThriftServiceMetadata;
 import com.facebook.drift.transport.MethodMetadata;
+import jakarta.inject.Inject;
 import org.weakref.jmx.MBeanExporter;
 import org.weakref.jmx.ObjectNameBuilder;
-
-import javax.inject.Inject;
 
 import java.io.Closeable;
 import java.util.Map;

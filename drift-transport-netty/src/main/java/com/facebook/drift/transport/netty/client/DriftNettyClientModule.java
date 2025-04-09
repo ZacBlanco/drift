@@ -25,10 +25,10 @@ import com.google.inject.Module;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import io.netty.buffer.ByteBufAllocator;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 import javax.annotation.PreDestroy;
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import java.lang.annotation.Annotation;
 

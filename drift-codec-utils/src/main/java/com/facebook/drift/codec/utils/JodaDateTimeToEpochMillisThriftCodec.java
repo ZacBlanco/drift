@@ -22,9 +22,8 @@ import com.facebook.drift.codec.metadata.ThriftCatalog;
 import com.facebook.drift.codec.metadata.ThriftType;
 import com.facebook.drift.protocol.TProtocolReader;
 import com.facebook.drift.protocol.TProtocolWriter;
+import jakarta.inject.Inject;
 import org.joda.time.DateTime;
-
-import javax.inject.Inject;
 
 import static java.util.Objects.requireNonNull;
 

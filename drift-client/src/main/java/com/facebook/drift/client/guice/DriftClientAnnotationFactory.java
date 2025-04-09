@@ -15,7 +15,7 @@
  */
 package com.facebook.drift.client.guice;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;

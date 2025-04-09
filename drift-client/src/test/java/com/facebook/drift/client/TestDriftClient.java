@@ -38,9 +38,8 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
+import jakarta.inject.Qualifier;
 import org.testng.annotations.Test;
-
-import javax.inject.Qualifier;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;

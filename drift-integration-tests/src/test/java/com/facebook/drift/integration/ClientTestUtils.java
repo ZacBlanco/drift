@@ -34,10 +34,10 @@ import com.google.common.net.HostAndPort;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
+import jakarta.inject.Inject;
+import jakarta.inject.Qualifier;
 import org.weakref.jmx.guice.MBeanModule;
 
-import javax.inject.Inject;
-import javax.inject.Qualifier;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
