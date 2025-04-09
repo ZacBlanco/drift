@@ -31,6 +31,7 @@ import com.facebook.drift.codec.metadata.ThriftStructMetadata;
 import com.facebook.drift.protocol.TProtocolException;
 import com.facebook.drift.protocol.TProtocolReader;
 import com.facebook.drift.protocol.TProtocolWriter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -97,6 +98,7 @@ public class ReflectionThriftStructCodec<T>
         return constructStruct(data);
     }
 
+    @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
     @Override
     public void write(T instance, TProtocolWriter protocol)
             throws Exception
