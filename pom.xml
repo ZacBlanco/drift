@@ -52,7 +52,7 @@
         <air.check.skip-pmd>true</air.check.skip-pmd>
         <air.check.skip-jacoco>true</air.check.skip-jacoco>
 
-        <dep.airlift.version>0.217-SNAPSHOT</dep.airlift.version>
+        <dep.airlift.version>jetty-12-upgrade-jitpack-f3f53ba1df-1</dep.airlift.version>
         <dep.takari-plugin.version>2.9.1</dep.takari-plugin.version>
         <dep.maven.version>3.5.3</dep.maven.version>
         <dep.guava.version>31.0.1-jre</dep.guava.version>
@@ -60,6 +60,13 @@
 
         <dep.netty.version>4.1.107.Final</dep.netty.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -118,31 +125,31 @@
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>bootstrap</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>configuration</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>concurrent</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>jmx</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>log</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
@@ -160,19 +167,19 @@
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>security</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>stats</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.facebook.airlift</groupId>
+                <groupId>com.github.zacblanco.airlift</groupId>
                 <artifactId>testing</artifactId>
                 <version>${dep.airlift.version}</version>
             </dependency>
