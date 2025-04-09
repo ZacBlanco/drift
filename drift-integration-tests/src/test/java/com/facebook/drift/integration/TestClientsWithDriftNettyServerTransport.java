@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 
 import static com.facebook.drift.codec.metadata.ThriftType.list;
 import static com.facebook.drift.integration.ApacheThriftTesterUtil.apacheThriftTestClients;
@@ -51,9 +52,7 @@ import static com.facebook.drift.integration.ClientTestUtils.DRIFT_OK;
 import static com.facebook.drift.integration.ClientTestUtils.MESSAGES;
 import static com.facebook.drift.integration.DriftNettyTesterUtil.driftNettyTestClients;
 import static com.facebook.drift.integration.LegacyApacheThriftTesterUtil.legacyApacheThriftTestClients;
-import static com.google.common.collect.Iterables.concat;
-import static com.google.common.collect.Iterables.getOnlyElement;
-import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.MoreCollectors.onlyElement;
 import static java.util.Collections.nCopies;
 import static org.testng.Assert.assertEquals;
 
@@ -94,7 +93,7 @@ public class TestClientsWithDriftNettyServerTransport
         }
         int invocationCount = testDriftServer(methodInvoker, clients.build());
 
-        assertEquals(methodInvoker.getMessages(), newArrayList(concat(nCopies(invocationCount, MESSAGES))));
+        assertEquals(methodInvoker.getMessages(), nCopies(invocationCount, MESSAGES).stream().flatMap(List::stream).collect(Collectors.toList()));
 
         return invocationCount;
     }
@@ -164,10 +163,10 @@ public class TestClientsWithDriftNettyServerTransport
             }
 
             Map<Short, Object> parameters = request.getParameters();
-            if (parameters.size() != 1 || !parameters.containsKey((short) 1) || !(getOnlyElement(parameters.values()) instanceof List)) {
+            if (parameters.size() != 1 || !parameters.containsKey((short) 1) || !(parameters.values().stream().collect(onlyElement()) instanceof List)) {
                 return Futures.immediateFailedFuture(new IllegalArgumentException("invalid parameters"));
             }
-            for (DriftLogEntry driftLogEntry : (List<DriftLogEntry>) getOnlyElement(parameters.values())) {
+            for (DriftLogEntry driftLogEntry : (List<DriftLogEntry>) parameters.values().stream().collect(onlyElement())) {
                 messages.add(new LogEntry(driftLogEntry.getCategory(), driftLogEntry.getMessage()));
             }
 

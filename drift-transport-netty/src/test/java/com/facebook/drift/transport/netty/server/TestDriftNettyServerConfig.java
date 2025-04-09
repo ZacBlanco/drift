@@ -20,7 +20,7 @@ import io.airlift.units.DataSize;
 import io.airlift.units.Duration;
 import org.testng.annotations.Test;
 
-import java.io.File;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import static com.facebook.airlift.configuration.testing.ConfigAssertions.assertFullMapping;
@@ -89,8 +89,8 @@ public class TestDriftNettyServerConfig
                 .setSslContextRefreshTime(new Duration(33, MINUTES))
                 .setAllowPlaintext(false)
                 .setSslEnabled(true)
-                .setTrustCertificate(new File("trust"))
-                .setKey(new File("key"))
+                .setTrustCertificate(Paths.get("trust").toFile())
+                .setKey(Paths.get("key").toFile())
                 .setKeyPassword("key_password")
                 .setSessionCacheSize(678)
                 .setSessionTimeout(new Duration(78, HOURS))

@@ -18,7 +18,6 @@ package com.facebook.drift.codec.metadata;
 import com.facebook.drift.annotations.ThriftMethod;
 import com.facebook.drift.annotations.ThriftService;
 import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Iterables;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -33,6 +32,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.Comparators.emptiesLast;
 import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.google.common.collect.MoreCollectors.onlyElement;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 
@@ -103,7 +103,7 @@ public class ThriftServiceMetadata
         checkArgument(!serviceAnnotations.isEmpty(), "Service class %s is not annotated with @ThriftService", serviceClass.getName());
         checkArgument(serviceAnnotations.size() == 1, "Service class %s has multiple conflicting @ThriftService annotations: %s", serviceClass.getName(), serviceAnnotations);
 
-        return Iterables.getOnlyElement(serviceAnnotations);
+        return serviceAnnotations.stream().collect(onlyElement());
     }
 
     @Override

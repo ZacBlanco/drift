@@ -58,9 +58,7 @@ import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 import static com.facebook.drift.codec.metadata.ThriftType.list;
-import static com.google.common.collect.Iterables.concat;
-import static com.google.common.collect.Iterables.getOnlyElement;
-import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.MoreCollectors.onlyElement;
 import static java.lang.String.format;
 import static java.util.Collections.nCopies;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -105,7 +103,7 @@ public class TestDriftNettyServerTransport
                 address -> testOutOfOrder(address, MESSAGES, new TFramedTransport.Factory(), new TBinaryProtocol.Factory(), methodInvoker.getFutureResults()),
                 address -> testOutOfOrder(address, MESSAGES, new TFramedTransport.Factory(), new TCompactProtocol.Factory(), methodInvoker.getFutureResults())));
 
-        List<DriftLogEntry> expectedMessages = newArrayList(concat(nCopies(invocationCount, DRIFT_MESSAGES)));
+        List<DriftLogEntry> expectedMessages = nCopies(invocationCount, DRIFT_MESSAGES).stream().flatMap(List::stream).collect(Collectors.toList());
         assertEquals(ImmutableList.copyOf(methodInvoker.getMessages()), expectedMessages);
     }
 
@@ -165,7 +163,7 @@ public class TestDriftNettyServerTransport
                 address -> testOutOfOrderNotSupported(address, MESSAGES, new TFramedTransport.Factory(), new TBinaryProtocol.Factory(), methodInvoker.getFutureResults()),
                 address -> testOutOfOrderNotSupported(address, MESSAGES, new TFramedTransport.Factory(), new TCompactProtocol.Factory(), methodInvoker.getFutureResults())));
 
-        List<DriftLogEntry> expectedMessages = newArrayList(concat(nCopies(invocationCount, DRIFT_MESSAGES)));
+        List<DriftLogEntry> expectedMessages = nCopies(invocationCount, DRIFT_MESSAGES).stream().flatMap(List::stream).collect(Collectors.toList());
         assertEquals(ImmutableList.copyOf(methodInvoker.getMessages()), expectedMessages);
     }
 
@@ -275,10 +273,10 @@ public class TestDriftNettyServerTransport
             }
 
             Map<Short, Object> parameters = request.getParameters();
-            if (parameters.size() != 1 || !parameters.containsKey((short) 1) || !(getOnlyElement(parameters.values()) instanceof List)) {
+            if (parameters.size() != 1 || !parameters.containsKey((short) 1) || !(parameters.values().stream().collect(onlyElement()) instanceof List)) {
                 return Futures.immediateFailedFuture(new IllegalArgumentException("invalid parameters"));
             }
-            messages.addAll((List<LogEntry>) getOnlyElement(parameters.values()));
+            messages.addAll((List<LogEntry>) parameters.values().stream().collect(onlyElement()));
 
             SettableFuture<Object> result = SettableFuture.create();
             futureResults.add(result);

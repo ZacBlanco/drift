@@ -110,7 +110,7 @@ import static com.facebook.drift.codec.ThriftProtocolType.SET;
 import static com.facebook.drift.codec.ThriftProtocolType.STRING;
 import static com.facebook.drift.codec.ThriftProtocolType.STRUCT;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.google.common.collect.Iterables.getOnlyElement;
+import static com.google.common.collect.MoreCollectors.onlyElement;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;
 
@@ -539,7 +539,7 @@ public class ThriftCodecByteCodeGenerator<T>
         method.getBody().append(switchBuilder.build());
 
         // find the @ThriftUnionId field
-        ThriftFieldMetadata idField = getOnlyElement(metadata.getFields(FieldKind.THRIFT_UNION_ID));
+        ThriftFieldMetadata idField = metadata.getFields(FieldKind.THRIFT_UNION_ID).stream().collect(onlyElement());
 
         injectIdField(method, idField, instance, fieldId);
 
@@ -809,7 +809,7 @@ public class ThriftCodecByteCodeGenerator<T>
         body.append(writer.invoke("writeStructBegin", void.class, constantString(metadata.getStructName())));
 
         // find the @ThriftUnionId field
-        ThriftFieldMetadata idField = getOnlyElement(metadata.getFields(FieldKind.THRIFT_UNION_ID));
+        ThriftFieldMetadata idField = metadata.getFields(FieldKind.THRIFT_UNION_ID).stream().collect(onlyElement());
 
         // load its value
         BytecodeExpression value = getFieldValue(method, idField);

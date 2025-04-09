@@ -39,6 +39,7 @@ import javax.net.ssl.SSLServerSocket;
 
 import java.util.List;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 
 import static com.facebook.drift.integration.ApacheThriftTesterUtil.apacheThriftTestClients;
 import static com.facebook.drift.integration.ClientTestUtils.MESSAGES;
@@ -46,8 +47,6 @@ import static com.facebook.drift.integration.DriftNettyTesterUtil.driftNettyTest
 import static com.facebook.drift.integration.LegacyApacheThriftTesterUtil.legacyApacheThriftTestClients;
 import static com.facebook.drift.transport.netty.codec.Protocol.FB_COMPACT;
 import static com.facebook.drift.transport.netty.codec.Transport.HEADER;
-import static com.google.common.collect.Iterables.concat;
-import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.nCopies;
 import static org.testng.Assert.assertEquals;
 
@@ -93,7 +92,7 @@ public class TestClientsWithApacheServer
             }
         }
 
-        assertEquals(scribeService.getMessages(), newArrayList(concat(nCopies(invocationCount, MESSAGES))));
+        assertEquals(scribeService.getMessages(), nCopies(invocationCount, MESSAGES).stream().flatMap(List::stream).collect(Collectors.toList()));
 
         return invocationCount;
     }

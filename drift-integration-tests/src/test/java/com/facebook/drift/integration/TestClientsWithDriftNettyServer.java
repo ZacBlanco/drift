@@ -36,6 +36,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static com.facebook.drift.integration.ApacheThriftTesterUtil.apacheThriftTestClients;
 import static com.facebook.drift.integration.ClientTestUtils.DRIFT_MESSAGES;
@@ -43,8 +44,6 @@ import static com.facebook.drift.integration.ClientTestUtils.HEADER_VALUE;
 import static com.facebook.drift.integration.DriftNettyTesterUtil.driftNettyTestClients;
 import static com.facebook.drift.integration.LegacyApacheThriftTesterUtil.legacyApacheThriftTestClients;
 import static com.facebook.drift.transport.netty.codec.Transport.HEADER;
-import static com.google.common.collect.Iterables.concat;
-import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.nCopies;
 import static org.testng.Assert.assertEquals;
 
@@ -81,9 +80,9 @@ public class TestClientsWithDriftNettyServer
                 for (Transport transport : ImmutableList.of(HEADER)) {
                     for (Protocol protocol : Protocol.values()) {
                         int count = Streams.concat(
-                                legacyApacheThriftTestClients(filters, transport, protocol, secure).stream(),
-                                driftNettyTestClients(filters, transport, protocol, secure).stream(),
-                                apacheThriftTestClients(filters, transport, protocol, secure).stream())
+                                        legacyApacheThriftTestClients(filters, transport, protocol, secure).stream(),
+                                        driftNettyTestClients(filters, transport, protocol, secure).stream(),
+                                        apacheThriftTestClients(filters, transport, protocol, secure).stream())
                                 .mapToInt(client -> client.applyAsInt(address))
                                 .sum();
                         invocationCount.addAndGet(count);
@@ -95,8 +94,8 @@ public class TestClientsWithDriftNettyServer
             }
         });
 
-        assertEquals(scribeService.getMessages(), newArrayList(concat(nCopies(invocationCount.get(), DRIFT_MESSAGES))));
-        assertEquals(scribeService.getHeaders(), newArrayList(nCopies(headerInvocationCount.get(), HEADER_VALUE)));
+        assertEquals(scribeService.getMessages(), nCopies(invocationCount.get(), DRIFT_MESSAGES).stream().flatMap(List::stream).collect(Collectors.toList()));
+        assertEquals(scribeService.getHeaders(), nCopies(headerInvocationCount.get(), HEADER_VALUE));
 
         return invocationCount.get();
     }

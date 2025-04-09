@@ -19,7 +19,6 @@ import com.facebook.drift.annotations.ThriftConstructor;
 import com.facebook.drift.annotations.ThriftField;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.reflect.TypeToken;
@@ -47,6 +46,7 @@ import java.util.TreeSet;
 
 import static com.facebook.drift.annotations.ThriftField.Requiredness;
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.collect.MoreCollectors.onlyElement;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toCollection;
@@ -584,7 +584,7 @@ public abstract class AbstractThriftMetadataBuilder
             // single id, so set on all fields in this group (groups with no id are handled later),
             // and validate isLegacyId is consistent and correct.
             if (ids.size() == 1) {
-                short id = Iterables.getOnlyElement(ids);
+                short id = ids.stream().collect(onlyElement());
 
                 boolean isLegacyId = extractFieldIsLegacyId(id, fieldName, fields);
 
