@@ -28,8 +28,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 
 import java.io.Closeable;
 import java.util.Map;

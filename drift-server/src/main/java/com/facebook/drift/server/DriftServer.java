@@ -20,10 +20,9 @@ import com.facebook.drift.server.stats.MethodInvocationStatsFactory;
 import com.facebook.drift.transport.server.ServerTransport;
 import com.facebook.drift.transport.server.ServerTransportFactory;
 import com.google.common.collect.ImmutableList;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 import java.util.Set;
 
